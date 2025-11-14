@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:tns="{{BASE_NAMESPACE}}"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="{{BASE_NAMESPACE}}"
+    name="ClientesService">
+    <types>
+        <xsd:schema targetNamespace="{{BASE_NAMESPACE}}">
+            <xsd:complexType name="ClienteType">
+                <xsd:sequence>
+                    <xsd:element name="clave" type="xsd:string" />
+                    <xsd:element name="nombre" type="xsd:string" />
+                    <xsd:element name="direccion" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="telefono" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="fecha_registro" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ResultadoType">
+                <xsd:sequence>
+                    <xsd:element name="exito" type="xsd:boolean" />
+                    <xsd:element name="mensaje" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="Cliente" type="tns:ClienteType" />
+            <xsd:element name="Resultado" type="tns:ResultadoType" />
+            <xsd:element name="obtenerClienteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="clave" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="obtenerClienteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:Cliente" minOccurs="0" />
+                        <xsd:element ref="tns:Resultado" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="guardarClienteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="clave" type="xsd:string" />
+                        <xsd:element name="nombre" type="xsd:string" />
+                        <xsd:element name="direccion" type="xsd:string" minOccurs="0" />
+                        <xsd:element name="telefono" type="xsd:string" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="guardarClienteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:Resultado" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="modificarClienteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="clave" type="xsd:string" />
+                        <xsd:element name="nombre" type="xsd:string" />
+                        <xsd:element name="direccion" type="xsd:string" minOccurs="0" />
+                        <xsd:element name="telefono" type="xsd:string" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="modificarClienteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="tns:Resultado" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="obtenerClienteInput">
+        <part name="parameters" element="tns:obtenerClienteRequest" />
+    </message>
+    <message name="obtenerClienteOutput">
+        <part name="parameters" element="tns:obtenerClienteResponse" />
+    </message>
+    <message name="guardarClienteInput">
+        <part name="parameters" element="tns:guardarClienteRequest" />
+    </message>
+    <message name="guardarClienteOutput">
+        <part name="parameters" element="tns:guardarClienteResponse" />
+    </message>
+    <message name="modificarClienteInput">
+        <part name="parameters" element="tns:modificarClienteRequest" />
+    </message>
+    <message name="modificarClienteOutput">
+        <part name="parameters" element="tns:modificarClienteResponse" />
+    </message>
+
+    <portType name="ClientesPortType">
+        <operation name="obtenerCliente">
+            <input message="tns:obtenerClienteInput" />
+            <output message="tns:obtenerClienteOutput" />
+        </operation>
+        <operation name="guardarCliente">
+            <input message="tns:guardarClienteInput" />
+            <output message="tns:guardarClienteOutput" />
+        </operation>
+        <operation name="modificarCliente">
+            <input message="tns:modificarClienteInput" />
+            <output message="tns:modificarClienteOutput" />
+        </operation>
+    </portType>
+
+    <binding name="ClientesBinding" type="tns:ClientesPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="obtenerCliente">
+            <soap:operation soapAction="{{BASE_NAMESPACE}}#obtenerCliente" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="guardarCliente">
+            <soap:operation soapAction="{{BASE_NAMESPACE}}#guardarCliente" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="modificarCliente">
+            <soap:operation soapAction="{{BASE_NAMESPACE}}#modificarCliente" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <service name="ClientesService">
+        <documentation>Servicio SOAP para la administración de clientes.</documentation>
+        <port name="ClientesPort" binding="tns:ClientesBinding">
+            <soap:address location="{{BASE_URL}}" />
+        </port>
+    </service>
+</definitions>

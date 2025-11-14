@@ -1,0 +1,4 @@
+database/*.db
+vendor/
+!lib/vendor/
+!lib/vendor/**
